@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <title>Home</title>
+    <style>
+        body {
+            background-color: blanchedalmond;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .header {
+            background-color: #3498db;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .footer {
+            background-color: #3498db;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: auto;
+        }
+
+        h1 {
+            font-style: italic;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: lightgray;
+        }
+
+        tr:nth-child(even) {
+            background-color: lightyellow;
+        }
+
+        tr:nth-child(odd) {
+            background-color: lightcyan;
+        }
+
+        .status-cell {
+            color: green; /* Done color */
+        }
+
+        .status-cell.not-done {
+            color: black; /* Not Done color */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Track Down Your ToDOs</h1>
+    </div>
+    {% include 'navbar.html' %}
+    
+    <table>
+        <tr>
+            <th>No</th>
+            <th>Project</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        {% for i in todo %}
+        <tr>
+            <td>{{ i.id }}</td>
+            <td>{{ i.name }}</td>
+            <td>{{ i.description }}</td>
+            <td class="status-cell {{ i.status | lower }}">
+                {% if i.status == "Done" %}
+                    ✔️ Done
+                {% else %}
+                    ❌ Not Done
+                {% endif %}
+            </td>
+            <td><button type="button" class="btn btn-warning"><a href="{% url 'edit' pk=i.id %}">Edit</a></button> <button type="button" class="btn btn-warning"><a href="{% url 'delete' pk=i.id %}">Delete</a></button> <button type="button" class="btn btn-warning"><a href="{% url 'deleteall' %}">Delete ALL</a></button></td>
+
+            
+        </tr>
+        {% endfor %}
+    </table>
+    <div class="footer">
+        <p>This is a simple ToDO tracking application. Keep track of your tasks and their statuses easily!</p>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
+
+</html>
